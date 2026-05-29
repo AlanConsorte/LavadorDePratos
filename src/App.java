@@ -30,7 +30,7 @@ public class App {
         enxugador.done();
 
         synchronized (escorredor) {
-            lavador.notifyAll();
+            escorredor.notifyAll();
         }
 
     }
