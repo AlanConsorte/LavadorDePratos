@@ -27,16 +27,16 @@ public class Lavador implements Runnable {
 
             switch (p.getSujeira()) {
                 case BAIXO:
-                    tempo = 300;
+                    tempo = 3;
                     break;
                 case MEDIO:
-                    tempo = 500;
+                    tempo = 5;
                     break;
                 case ENGORDURADO:
-                    tempo = 1000;
+                    tempo = 10;
                     break;
                 default:
-                    tempo = 1000;
+                    tempo = 10;
                     break;
             }
             try {
@@ -46,16 +46,22 @@ public class Lavador implements Runnable {
             }
 
             synchronized (escorredor) {
-                while (escorredor.getPratos().size() == escorredor.getMax()) {
+                while (escorredor.getPratos().size() == escorredor.getMax() && !done) {
                     try {
                         escorredor.wait();
                     } catch (InterruptedException ex) {
                     }
                 }
+
+                if (done) {
+                    break;
+                }
+
                 escorredor.colocarPrato(p);
+
                 if (escorredor.getPratos().size() == 1) {
                     escorredor.notify();
-                    
+
                 }
             }
         }

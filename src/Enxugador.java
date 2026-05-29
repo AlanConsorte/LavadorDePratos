@@ -19,15 +19,22 @@ public class Enxugador implements Runnable {
         done = false;
         Random r = new Random();
 
-        while (!done) {
+        while (!done || !escorredor.getPratos().isEmpty()) {
             synchronized (escorredor) {
-                while (escorredor.getPratos().isEmpty()) {
+
+                while (escorredor.getPratos().isEmpty() && !done) {
                     try {
                         escorredor.wait();
                     } catch (InterruptedException ex) {
                     }
                 }
+
+                if (escorredor.getPratos().isEmpty() && done) {
+                    break;
+                }
+
                 escorredor.retirarPrato();
+
                 if (escorredor.getPratos().isEmpty()) {
                     escorredor.notify();
 
@@ -35,7 +42,7 @@ public class Enxugador implements Runnable {
             }
 
             try {
-                Thread.sleep(r.nextInt(3, 11));
+                Thread.sleep(r.nextInt(3, 10));
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }

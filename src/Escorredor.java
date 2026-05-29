@@ -5,9 +5,8 @@ public class Escorredor {
 
     private static final Logger logger = Logger.getLogger(Escorredor.class.getName());
 
-    private final int max = 10;
+    private final int max = 100;
     private final LinkedList<Prato> pratos = new LinkedList<>();
-
 
     public void colocarPrato(Prato p) {
         if (pratos.size() >= max) {
@@ -16,8 +15,9 @@ public class Escorredor {
         }
 
         pratos.addFirst(p);
-        
-        logger.info("LAVADOR: Prato ID " + p.getNumSerie() + " foi lavado e colocado no escorredor. Total atual: " + pratos.size());
+
+        logger.info("LAVADOR: Prato ID " + p.getNumSerie() + " foi lavado e colocado no escorredor. Total atual: "
+                + pratos.size());
 
         this.status("LAVADOR: ");
 
@@ -33,7 +33,8 @@ public class Escorredor {
 
         Prato p = pratos.removeLast();
 
-        logger.info("SECADOR: Prato ID " + p.getNumSerie() + " foi retirado do escorredor e esta sendo seco. Total restante: " + pratos.size());
+        logger.info("SECADOR: Prato ID " + p.getNumSerie()
+                + " foi retirado do escorredor e esta sendo seco. Total restante: " + pratos.size());
 
         this.status("SECADOR: ");
     }
@@ -55,6 +56,6 @@ public class Escorredor {
 
     public LinkedList<Prato> getPratos() {
         return pratos;
-        
+
     }
 }
