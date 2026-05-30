@@ -1,7 +1,10 @@
 
 import java.util.Random;
+import java.util.logging.Logger;
 
 public class Enxugador implements Runnable {
+
+    private static final Logger logger = Logger.getLogger(Enxugador.class.getName());
 
     private final Escorredor escorredor;
     private Boolean done;
@@ -41,12 +44,18 @@ public class Enxugador implements Runnable {
                 }
             }
 
+            if (done && escorredor.getPratos().isEmpty()) {
+                logger.info("SECADOR: O tempo acabou e todos os pratos pendentes foram secos. Finalizando!");
+                break;
+            }
+
             try {
                 Thread.sleep(r.nextInt(3, 10));
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
             }
         }
+
     }
 
 }
